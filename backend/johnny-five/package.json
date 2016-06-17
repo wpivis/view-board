@@ -1,0 +1,17 @@
+{
+  "name": "view-board",
+  "version": "0.1.0",
+  "description": "JohnnyFive server for Arduino communication",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nam Tran",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.14.0",
+    "johnny-five": "^0.9.56",
+    "node-pixel": "^0.6.1"
+  }
+}
