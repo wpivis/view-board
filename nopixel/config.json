@@ -1,0 +1,8 @@
+[{
+	"controller": "FIRMATA",
+	"data": 6,
+	"length": 1
+}, {
+	"buttonPins": 3,
+	"isPullup": "true"
+}]
