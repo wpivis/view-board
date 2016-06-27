@@ -2,6 +2,18 @@ var five = require('johnny-five');
 var pixel = require('node-pixel');
 var express = require('express');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+
+fs.readFile('./config.json', function(error, data) {
+    if(error) {
+        throw error;
+    }
+    console.log(data);
+    //Config stuff here
+});
+
+
+
 
 var app = express();
 app.use(bodyParser.json());
