@@ -4,8 +4,10 @@ var svg = d3.select("#container").append("svg")
 			.attr("height",410)
 			.style("border","1px solid black");
 
-for(var colNum=0;colNum<7;colNum++) {
-	for(var rowNum=0;rowNum<7;rowNum++) {
+var col=2, row=2;
+
+for(var colNum=0;colNum<col;colNum++) {
+	for(var rowNum=0;rowNum<row;rowNum++) {
 		svg.append("rect").attr("width","50")
 							.attr("height","50")
 							.attr("x",colNum*50+colNum*10)	
@@ -31,6 +33,7 @@ for(var colNum=0;colNum<7;colNum++) {
 	}
 }
 var sendToServer = function() {
+	console.log(gridLights);
 	$.post( "/userInput",gridLights).done(function(data) {
 		alert("Server said:"+data);
 	});
