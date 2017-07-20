@@ -1,8 +1,12 @@
 [{
+  "fps":2,
+  "repl": false
+},
+{
 	"controller": "FIRMATA",
-	"data": 6,
-	"length": 1
+	"dataPin": 13,
+	"length": 49
 }, {
-	"buttonPins": 3,
+	"buttonPins": [12,11,10,9,8,7,6,5,4,3,2,1,0,14,15,16,17,18,19,20,21],
 	"isPullup": "true"
 }]
