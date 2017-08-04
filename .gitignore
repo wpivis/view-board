@@ -1,5 +1,6 @@
 backend/johnny-five/node_modules/
 node_modules/nopixel/node_modules/
+test/node_modules
 
 # ignore log files
 *.log

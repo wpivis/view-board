@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Testing stuff, prob gonna remove",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nam Tran",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^5.0.0"
+  }
+}
