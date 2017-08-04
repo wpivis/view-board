@@ -30,7 +30,7 @@ port.on('data', function(data) {
 
 function parsePackets(data) {
 	var packetArray = [];
-	for (i=0;i<data.length-1;i++) {
+	for (var i=0;i<data.length-1;i++) {
 		if (data[i] == 0x13) {
 			var packetLength = data[i+1] + 2;
 			console.log("Found a command, " + packetLength + " bits long");
@@ -55,7 +55,7 @@ function parsePackets(data) {
 		}
 	}
 
-	//Array of packets, each starts with a header and ends with checksum 
+	//Array of packets, eachPl starts with a header and ends with checksum 
 	return packetArray;
 }
 

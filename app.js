@@ -2,15 +2,19 @@ var Nopixel = require('nopixel');
 //Set the configuration
 var nopixel = new Nopixel("./config.json");
 //Start everything
-nopixel.start();
 console.log("Quick sanity check");
-//Test the first 14 lights
-// nopixel.test(14) ;
+
+var colors = ['#F00', '#0F0', '#00F'];
 
 // For testing purposes: Every button press will assign a different button color.
-nopixel.on('buttonPressed', function (pressIndex) {
-	console.log("Received button press: " + pressIndex);
-	var randomColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+nopixel.on('clicked', function (eventDetail) {
+	console.log("Received button press: " + eventDetail.index);
+	var randomColor = colors[Math.floor(Math.random() * 3)];
 	console.log(randomColor);
-	nopixel.setPixel(pressIndex, randomColor);
+	console.log(eventDetail.x, eventDetail.y);
+	nopixel.setPixel(eventDetail.x, eventDetail.y, randomColor);
 })
+
+nopixel.on('pressed', function (eventDetail) {
+	nopixel.setPixel(eventDetail.x, eventDetail.y, "black");
+});
