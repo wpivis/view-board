@@ -134,7 +134,6 @@ void parseCommand() {
           Serial.println("Setting Pixel...");
           break;
         }
-        
         newData = false;
     }
 }
