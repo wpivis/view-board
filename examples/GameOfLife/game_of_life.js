@@ -125,7 +125,6 @@ var Board = function(length, height) {
 						if (currentCell.generation > MAX_GENERATION) {
 							affected.unshift(currentCell);
 						}
-
 					}
 				} else {
 					if (currentCell.getLiveNeighbors() == 3) {
@@ -162,8 +161,8 @@ var Board = function(length, height) {
 			for (var j=0;j<self.height;j++) {
 				if(self.cells[i][j].age == 0) {
 					nopixel.setPixel(i, j, "black");
-				} else if (self.cells[i][j] == 1) {
-					nopixel.setPixel(i, j, "white");
+				} else if (self.cells[i][j].age == 1) {
+					nopixel.setPixel(i, j, {h: 10, s: 1, l: 0.5});
 				} else {
 					nopixel.setPixel(i, j, colorFromAge(self.cells[i][j]));
 				}
@@ -198,10 +197,8 @@ nopixel.on("pressed", function(eventDetail) {
 })
 
 function colorFromAge(cell) {
-
 	return {h: cell.age%MAX_AGE, s:1, l: 0.5-(0.1*cell.generation)}
 }
-
 
 // Cleanup routine
 process.stdin.resume();//so the program will not close instantly
