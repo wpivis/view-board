@@ -96,6 +96,7 @@ void recvWithStartEndMarkers() {
     char rc;
  
  // if (Serial.available() > 0) {
+ // This command is blocking - fix it???
     while (Serial.available() > 0 && newData == false) {
         rc = Serial.read();
 
@@ -124,14 +125,17 @@ void recvWithStartEndMarkers() {
 void parseCommand() {
     if (newData) {
         // Command would be stored in receivedChars[]
-        Serial.println("Your wish is my command!");
+//        Serial.println("Your wish is my command!");
         switch (receivedChars[0]) {
           case 104: //Set a specific pixel to a color. First bit is pixel address, next 3 bits are RGB values.
           leds[receivedChars[1]].r = receivedChars[2];
           leds[receivedChars[1]].g = receivedChars[3];
           leds[receivedChars[1]].b = receivedChars[4];
+//          Serial.println("Setting Pixel...");
+          break;
+
+          case 105: 
           FastLED.show();
-          Serial.println("Setting Pixel...");
           break;
         }
         newData = false;

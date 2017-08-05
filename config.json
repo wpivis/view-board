@@ -1,4 +1,4 @@
 [{
-  "comPort": "/dev/ttyACM0",
+  "comPort": "COM4",
   "baudRate": 9600
 }]

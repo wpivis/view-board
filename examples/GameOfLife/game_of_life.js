@@ -1,8 +1,8 @@
-var Nopixel = require('../node_modules/nopixel');
-var nopixel = new Nopixel("../config.json");
+var Nopixel = require('../../node_modules/nopixel');
+var nopixel = new Nopixel("../../config.json");
 
 const fps = 4;
-const MAX_AGE = 180;
+const MAX_AGE = 360;
 const MAX_GENERATION = 5;
 
 var isPaused = false;
@@ -55,7 +55,6 @@ var Cell = function(x, y, board) {
 
 	self.kill = function() {
 		// console.log("Killed cell " + self.x);
-		// nopixel.setPixel(self.x, self.y, "black");
 		self.age = 0;
 		self.generation = 0;
 		return self.dead = true;
@@ -63,7 +62,6 @@ var Cell = function(x, y, board) {
 
 	self.rise = function() {
 		// console.log("Raised cell " + self.x);
-		// nopixel.setPixel(self.x, self.y, "white");
 		self.age = 1;
 		self.generation = 1;
 		return self.dead = false;
@@ -160,8 +158,6 @@ var Board = function(length, height) {
 
 	//Export world into RGB Buffer
 	self.export = function() {
-		// var array = [];
-
 		for (var i=0;i<self.length;i++) {
 			for (var j=0;j<self.height;j++) {
 				if(self.cells[i][j].age == 0) {
@@ -169,16 +165,12 @@ var Board = function(length, height) {
 				} else if (self.cells[i][j] == 1) {
 					nopixel.setPixel(i, j, "white");
 				} else {
-					// nopixel.setPixel(i, j, '#'+Math.floor(Math.random()*16777215).toString(16));
-					// nopixel.setPixel(i, j, "cyan");
 					nopixel.setPixel(i, j, colorFromAge(self.cells[i][j]));
-
 				}
 			}
 		}
 		// console.log("Sending frame...");
-
-		// return new Buffer.from(array);
+		nopixel.update();
 	}
 }
 
