@@ -95,9 +95,9 @@ void recvWithStartEndMarkers() {
     char endMarker = 173;
     char rc;
  
- // if (Serial.available() > 0) {
  // This command is blocking - fix it???
-    while (Serial.available() > 0 && newData == false) {
+ // Fixed it - haven't tested if any packets are lost this way..
+    if (Serial.available() > 0 && newData == false) {
         rc = Serial.read();
 
         if (recvInProgress == true) {
@@ -136,6 +136,14 @@ void parseCommand() {
 
           case 105: 
           FastLED.show();
+          break;
+
+          case 106:
+          for (int i=0;i<NUM_LEDS;i++) {
+            leds[i].r = receivedChars[i*3+2];
+            leds[i].g = receivedChars[i*3+3];
+            leds[i].b = receivedChars[i*3+4];
+          }
           break;
         }
         newData = false;
