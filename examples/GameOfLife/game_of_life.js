@@ -7,6 +7,15 @@ const MAX_GENERATION = 5;
 
 var isPaused = false;
 
+var idleTimeout = function(board) {
+	return setTimeout(function() {
+		if (board.isBarren()) {
+			console.log("Board is idle. Germinating..");
+			board.init();
+		}
+	}, 5000);
+}
+
 var Cell = function(x, y, board) {
 	var self = this;
 	self.x = x;
@@ -105,11 +114,13 @@ var Board = function(length, height) {
 
 	self.tick = function() {
 		var affected = [];
+		self.deadCounter = 0;
 		for (var i=0;i<self.length;i++) {
 			for (var j=0;j<self.height;j++) {
 				var currentCell = self.cells[i][j];
 				var neighbors = currentCell.getNeighbors();
 				if (currentCell.isAlive()) {
+					self.deadCounter = 0;
 					if (currentCell.getLiveNeighbors() > 3) {
 						affected.unshift(currentCell);
 					} else if (currentCell.getLiveNeighbors() < 2) {
@@ -127,6 +138,7 @@ var Board = function(length, height) {
 						}
 					}
 				} else {
+					self.deadCounter++;
 					if (currentCell.getLiveNeighbors() == 3) {
 						affected.unshift(currentCell);
 					}
@@ -137,6 +149,11 @@ var Board = function(length, height) {
 			cell.toggle();
 		})
 	} //oh noes its a pyramid scheme
+
+	self.isBarren = function() {
+		console.log(self.deadCounter);
+		return (self.deadCounter == 49);
+	}
 
 	// Binary representation of the world, printed out to console.
 	self.print = function() {
@@ -175,14 +192,15 @@ var Board = function(length, height) {
 
 var world1 = new Board(7,7);
 world1.init();
+var timer1 = idleTimeout(world1);
 console.log("initializing..")
 var redraw = setInterval(function() {
 	if (isPaused) {
 		world1.export();
 	} else {
 		console.log("tick");
+		timer1 = idleTimeout(world1);
 		world1.tick();
-		// world1.print();
 		world1.export();
 	}
 }, 1000/fps)
@@ -194,6 +212,11 @@ nopixel.on("clicked", function(eventDetail) {
 
 nopixel.on("pressed", function(eventDetail) {
 	isPaused = !isPaused;
+})
+
+nopixel.on("released", function(eventDetail) {
+	clearTimeout(timer1);
+	// timer1 = idleTimeout(world1);
 })
 
 function colorFromAge(cell) {

@@ -4,17 +4,30 @@ var nopixel = new Nopixel("./config.json");
 //Start everything
 console.log("Quick sanity check");
 
-var colors = ['#F00', '#0F0', '#00F'];
+// 16 Color wheel
+var colors = ["white", "red", "lime", "blue", "yellow", "cyan", "magenta", "silver", "gray", "maroon", "olive", "green", "purple", "teal", "navy", "black"];
+var counter = new Array(49).fill(0);
 
 // For testing purposes: Every button press will assign a different button color.
 nopixel.on('clicked', function (eventDetail) {
 	console.log("Received button press: " + eventDetail.index);
-	var randomColor = colors[Math.floor(Math.random() * 3)];
-	console.log(randomColor);
-	console.log(eventDetail.x, eventDetail.y);
-	nopixel.setPixel(eventDetail.x, eventDetail.y, randomColor);
+
+	counter[eventDetail.index]++;
+	if (counter[eventDetail.index] > 16) {
+		counter[eventDetail.index]=0;
+	}
+
+	var count = counter[eventDetail.index];
+	var color = colors[count];
+	console.log("Counter: " + count + ", Color: " + color);
+
+	nopixel.setPixel(eventDetail.x, eventDetail.y, color);
+	nopixel.update();
 })
 
 nopixel.on('pressed', function (eventDetail) {
-	nopixel.setPixel(eventDetail.x, eventDetail.y, "black");
+	counter[eventDetail.index] = 15;
+
+	nopixel.setPixel(eventDetail.x, eventDetail.y, colors[counter[eventDetail.index]]);
+	nopixel.update();
 });
