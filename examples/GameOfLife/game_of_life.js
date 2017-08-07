@@ -8,12 +8,14 @@ const MAX_GENERATION = 5;
 var isPaused = false;
 
 var idleTimeout = function(board) {
-	return setTimeout(function() {
+	var temp = setTimeout(function() {
 		if (board.isBarren()) {
 			console.log("Board is idle. Germinating..");
 			board.init();
 		}
-	}, 5000);
+	}, 30000);
+
+	return temp;
 }
 
 var Cell = function(x, y, board) {
@@ -214,7 +216,7 @@ nopixel.on("pressed", function(eventDetail) {
 	isPaused = !isPaused;
 })
 
-nopixel.on("released", function(eventDetail) {
+nopixel.on("idle", function(eventDetail) {
 	clearTimeout(timer1);
 	// timer1 = idleTimeout(world1);
 })
