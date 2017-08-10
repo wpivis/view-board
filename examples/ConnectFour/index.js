@@ -17,7 +17,6 @@ function component(width, height, color, x, y) {
     this.update = function() {
     	ctx.fillStyle = color;
     	ctx.fillRect(this.x, this.y, this.width, this.height);
-        nopixel.fromCanvas(ctx.getImageData(0,0,7,7).data);
     }
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
@@ -37,9 +36,11 @@ function component(width, height, color, x, y) {
 setTimeout(function(){nopixel.update()}, 500);
 
 var objects = [new component(1,1,'red', 1,1)];
+var colors = ["red", "green", "blue", "cyan", "purple"];
 
 nopixel.on('clicked', function(eventDetail) {
-	objects.push(new component(1,1, "cyan", eventDetail.x, eventDetail.y));
+	objects.push(new component(1,1, colors[Math.floor(Math.random() * colors.length)], eventDetail.x, eventDetail.y));
+    console.log(objects);
 })
 
 var el = new component(1,1,"red", 3,3);
@@ -53,8 +54,9 @@ setInterval(function(){
 			el.update();
 		})
 	}
+    nopixel.fromCanvas(ctx.getImageData(0,0,7,7).data);
 	nopixel.update();
-}, 1000/5);
+}, 1000/60);
 
 var fs = require('fs')
 , out = fs.createWriteStream(__dirname + '/test.png')

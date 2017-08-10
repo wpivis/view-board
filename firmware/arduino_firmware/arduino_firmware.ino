@@ -18,6 +18,7 @@ char keys[ROWS][COLS] = {
   {5, 12, 19, 26, 33, 40, 47},
   {6, 13, 20, 27, 34, 41, 48}
 };
+
 byte colPins[COLS] = {PIN_D0, PIN_D1, PIN_D2, PIN_D3, PIN_D4, PIN_D5, PIN_D6}; //connect to the row pinouts of the keypad
 byte rowPins[ROWS] = {PIN_B0, PIN_B1, PIN_B2, PIN_B3, PIN_B4, PIN_B5, PIN_B6}; //connect to the column pinouts of the keypad
 
@@ -30,6 +31,7 @@ boolean newData = false;
 
 void setup() {
   Serial.begin(BAUD_RATE);
+  Serial.setTimeout(50);
   kpd.setDebounceTime(1);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
@@ -143,13 +145,7 @@ void parseCommand() {
           for (int i=0; i<49; i++) {
             leds[i].r = receivedChars[i*3+3];
             leds[i].g = receivedChars[i*3+4];
-            leds[i].b = receivedChars[i*3+5];
-          Serial.print(receivedChars[i*3+3], DEC);
-          Serial.print(" ");
-          Serial.print(receivedChars[i*3+4], DEC);
-          Serial.print(" ");
-          Serial.print(receivedChars[i*3+5], DEC);
-          Serial.println();            
+            leds[i].b = receivedChars[i*3+5];          
           }
           break;
         }
