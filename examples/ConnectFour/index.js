@@ -34,58 +34,27 @@ function component(width, height, color, x, y) {
     }
 }
 
-var col2 = new Array(7*4).fill(255);
-
-var col1 = [   255,255,255,0,
-                255,0,255,0,
-                255,0,0,0,
-                0,0,255,0,
-                255,255,0,0,
-                0,255,255,0,
-                0,255,0,0];
-
-var col3 = new Array(7*4).fill(128);
-var col456 = new Array(28*4).fill(0);
-
-nopixel.clear();
-nopixel.fromCanvas(col1.concat(col2, col3, col456));
-
 setTimeout(function(){nopixel.update()}, 500);
 
-// var objects = [new component(1,1,'red', 1,1)];
+var objects = [new component(1,1,'red', 1,1)];
 
-// nopixel.on('clicked', function(eventDetail) {
-// 	objects.push(new component(1,1, "cyan", eventDetail.x, eventDetail.y));
-// })
+nopixel.on('clicked', function(eventDetail) {
+	objects.push(new component(1,1, "cyan", eventDetail.x, eventDetail.y));
+})
 
-// var el = new component(1,1,"red", 3,3);
+var el = new component(1,1,"red", 3,3);
 
-// setInterval(function(){
-// 	ctx.clearRect(0,0,7,7);
+setInterval(function(){
+	ctx.clearRect(0,0,7,7);
 
-// 	if (objects.length > 0) {
-// 		objects.forEach(function(el) {
-// 			el.newPos();
-// 			el.update();
-// 		})
-// 	}
-// 	nopixel.update();
-// }, 1000/10)
-
-// ctx.beginPath();
-// ctx.lineWidth="1";
-// ctx.strokeStyle="white";
-// ctx.rect(3,3,2,3); 
-// ctx.stroke();
-
-// var data = ctx.getImageData(0,0,7,7).data;
-// nopixel.clear();
-// nopixel.fromCanvas(data);
-// nopixel.update();
-
-// for(var i=0;i<49;i++) {
-// 	console.log(data[i*4], data[i*4+1], data[i*4+2]);
-// }
+	if (objects.length > 0) {
+		objects.forEach(function(el) {
+			el.newPos();
+			el.update();
+		})
+	}
+	nopixel.update();
+}, 1000/5);
 
 var fs = require('fs')
 , out = fs.createWriteStream(__dirname + '/test.png')

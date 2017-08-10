@@ -3,6 +3,7 @@
 
 #define NUM_LEDS 49
 #define DATA_PIN PIN_F1
+#define BAUD_RATE 115200
 
 CRGB leds[NUM_LEDS];
 
@@ -22,13 +23,13 @@ byte rowPins[ROWS] = {PIN_B0, PIN_B1, PIN_B2, PIN_B3, PIN_B4, PIN_B5, PIN_B6}; /
 
 Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
-const byte numChars = 32;
+const byte numChars = 152;
 char receivedChars[numChars];
 
 boolean newData = false;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(BAUD_RATE);
   kpd.setDebounceTime(1);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
@@ -76,9 +77,6 @@ void loop() {
         message[3] = msg;
         message[4] = 256 - 19 - 3 - kpd.key[i].kchar - msg;
         Serial.write(message, 5);
-//        Serial.write(kpd.key[i].kchar, DEC);
-//        Serial.println(msg);
-//        FastLED.show();
       }
     }
   }
@@ -146,6 +144,12 @@ void parseCommand() {
             leds[i].r = receivedChars[i*3+3];
             leds[i].g = receivedChars[i*3+4];
             leds[i].b = receivedChars[i*3+5];
+          Serial.print(receivedChars[i*3+3], DEC);
+          Serial.print(" ");
+          Serial.print(receivedChars[i*3+4], DEC);
+          Serial.print(" ");
+          Serial.print(receivedChars[i*3+5], DEC);
+          Serial.println();            
           }
           break;
         }
