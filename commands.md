@@ -11,9 +11,17 @@
 - Opcode: 104
 - [Start bit] [104] [PixelIndex] [R] [G] [B] [End bit]
 
-### Update LED
+### Update LEDs
 - Opcode: 105
 - [Start bit] [105] [End bit]
+
+### Clear LEDs
+- Opcode: 106
+- [Start bit] [106] [End bit]
+
+### Setting multiple pixels
+- Opcode: 107
+- [Start bit] [107] [startPx] [endPx] [r1] [g1] [b1] .... [rn] [gn] [bn] [end bit]
 
 ## From Teensy
 

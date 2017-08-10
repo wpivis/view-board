@@ -1,6 +1,9 @@
 var Nopixel = require('nopixel');
 //Set the configuration
 var nopixel = new Nopixel("./config.json");
+//Clear the board
+nopixel.clear();
+nopixel.update();
 //Start everything
 console.log("Quick sanity check");
 
@@ -11,6 +14,7 @@ var counter = new Array(49).fill(0);
 // For testing purposes: Every button press will assign a different button color.
 nopixel.on('clicked', function (eventDetail) {
 	console.log("Received button press: " + eventDetail.index);
+	console.log("x: " + eventDetail.x + ", y: " + eventDetail.y);
 
 	counter[eventDetail.index]++;
 	if (counter[eventDetail.index] > 16) {

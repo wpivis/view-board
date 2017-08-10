@@ -125,24 +125,27 @@ void recvWithStartEndMarkers() {
 void parseCommand() {
     if (newData) {
         // Command would be stored in receivedChars[]
-//        Serial.println("Your wish is my command!");
         switch (receivedChars[0]) {
           case 104: //Set a specific pixel to a color. First bit is pixel address, next 3 bits are RGB values.
           leds[receivedChars[1]].r = receivedChars[2];
           leds[receivedChars[1]].g = receivedChars[3];
           leds[receivedChars[1]].b = receivedChars[4];
-//          Serial.println("Setting Pixel...");
           break;
 
-          case 105: 
+          case 105: //Refresh
           FastLED.show();
           break;
 
-          case 106:
-          for (int i=0;i<NUM_LEDS;i++) {
-            leds[i].r = receivedChars[i*3+2];
-            leds[i].g = receivedChars[i*3+3];
-            leds[i].b = receivedChars[i*3+4];
+          case 106: //Clear
+          fill_solid(leds, NUM_LEDS, CRGB::Black);
+          break;
+
+          case 107: //Set multiple LEDs
+          // For crying out loud someone please implement a safety check please and thank you.
+          for (int i=0; i<49; i++) {
+            leds[i].r = receivedChars[i*3+3];
+            leds[i].g = receivedChars[i*3+4];
+            leds[i].b = receivedChars[i*3+5];
           }
           break;
         }

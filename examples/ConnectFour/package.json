@@ -1,0 +1,14 @@
+{
+  "name": "connect-four",
+  "version": "1.0.0",
+  "description": "Connect Four on the view-b��oard ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nam Tran",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.6.6"
+  }
+}

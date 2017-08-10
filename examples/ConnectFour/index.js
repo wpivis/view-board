@@ -1,69 +1,171 @@
 var Nopixel = require('../../node_modules/nopixel');
 var nopixel = new Nopixel("../../config.json");
 
-var Board = function() {
-	var self = this;
-	self.length = 7;
-	self.height = 6;
-	self.isTurnA = true;
+const Canvas = require('canvas');
+const canvas = new Canvas(7, 7);
+const ctx = canvas.getContext('2d');
 
-	self.cells = [];
+function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y; 
+    this.speedX = 0;
+    this.speedY = 0; 
+    this.gravity = 0.1;
+    this.gravitySpeed = 0;
+    this.update = function() {
+    	ctx.fillStyle = color;
+    	ctx.fillRect(this.x, this.y, this.width, this.height);
+        nopixel.fromCanvas(ctx.getImageData(0,0,7,7).data);
+    }
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom(); 
+    }
 
-	self.reset = function() {
-			for (var i=0;i<self.length;i++) {
-				var cols = [];
-				for (var j=0;j<self.height;j++) {
-					cols.push(new Cell(i,j));
-				}
-			self.cells.push(cols);
-		}
-	}
-
-	self.checkGravity = function() {
-
-	}
-
-	self.setPoint = function(x, y) {
-		// Check for collision
-
-		self.isTurnA ? 
-			self.cells[a][b].isPlayerA = true : 
-			self.cells[a][b].isPlayerA = false;
-	}
-
-	self.nextTurn = function() {
-		self.isTurnA = !self.isTurnA;
-		// Calculate logic
-	}
-
-	self.print = function() {
-		console.log(self.cells);
-	}
-
-	self.getCellUnder = function(Cell) {
-		return (Cell.y == 0) ? undefined : self.cells[Cell.x][Cell.y-1];
-	}
-
+    this.hitBottom = function() {
+    	var rockbottom = canvas.height - this.height;
+    	if (this.y > rockbottom) {
+    		this.y = rockbottom;
+    	}
+    }
 }
 
-var Cell = function(x, y, isPlayerA) {
-	var self = this;
-	self.x = x;
-	self.y = y;
-	self.isPlayerA = isPlayerA || undefined;
-}
+var col2 = new Array(7*4).fill(255);
 
-var board = new Board();
-board.reset();
-board.print();
+var col1 = [   255,255,255,0,
+                255,0,255,0,
+                255,0,0,0,
+                0,0,255,0,
+                255,255,0,0,
+                0,255,255,0,
+                0,255,0,0];
 
-setInterval(function(){
-	// Check for gravity
-	
-}, 1000/60)
+var col3 = new Array(7*4).fill(128);
+var col456 = new Array(28*4).fill(0);
 
-nopixel.on('clicked', function (eventDetail) {
-	board.setPoint(eventDetail.x, eventDetail.y);
-	board.nextTurn();
-	board.print();
+nopixel.clear();
+nopixel.fromCanvas(col1.concat(col2, col3, col456));
+
+setTimeout(function(){nopixel.update()}, 500);
+
+// var objects = [new component(1,1,'red', 1,1)];
+
+// nopixel.on('clicked', function(eventDetail) {
+// 	objects.push(new component(1,1, "cyan", eventDetail.x, eventDetail.y));
+// })
+
+// var el = new component(1,1,"red", 3,3);
+
+// setInterval(function(){
+// 	ctx.clearRect(0,0,7,7);
+
+// 	if (objects.length > 0) {
+// 		objects.forEach(function(el) {
+// 			el.newPos();
+// 			el.update();
+// 		})
+// 	}
+// 	nopixel.update();
+// }, 1000/10)
+
+// ctx.beginPath();
+// ctx.lineWidth="1";
+// ctx.strokeStyle="white";
+// ctx.rect(3,3,2,3); 
+// ctx.stroke();
+
+// var data = ctx.getImageData(0,0,7,7).data;
+// nopixel.clear();
+// nopixel.fromCanvas(data);
+// nopixel.update();
+
+// for(var i=0;i<49;i++) {
+// 	console.log(data[i*4], data[i*4+1], data[i*4+2]);
+// }
+
+var fs = require('fs')
+, out = fs.createWriteStream(__dirname + '/test.png')
+, stream = canvas.pngStream();
+
+stream.on('data', function(chunk){
+	out.write(chunk);
 });
+
+stream.on('end', function(){
+	console.log('saved png');
+});
+
+
+//======================================
+// const velocity = 
+
+// var Board = function() {
+// 	var self = this;
+// 	self.length = 7;
+// 	self.height = 6;
+// 	self.isTurnA = true;
+
+// 	self.cells = [];
+
+// 	self.reset = function() {
+// 			for (var i=0;i<self.length;i++) {
+// 				var cols = [];
+// 				for (var j=0;j<self.height;j++) {
+// 					cols.push(new Cell(i,j));
+// 				}
+// 			self.cells.push(cols);
+// 		}
+// 	}
+
+// 	self.checkGravity = function() {
+
+// 	}
+
+// 	self.setPoint = function(x, y) {
+// 		// Check for collision
+
+// 		self.isTurnA ? 
+// 			self.cells[a][b].isPlayerA = true : 
+// 			self.cells[a][b].isPlayerA = false;
+// 	}
+
+// 	self.nextTurn = function() {
+// 		self.isTurnA = !self.isTurnA;
+// 		// Calculate logic
+// 	}
+
+// 	self.print = function() {
+// 		console.log(self.cells);
+// 	}
+
+// 	self.getCellUnder = function(Cell) {
+// 		return (Cell.y == 0) ? undefined : self.cells[Cell.x][Cell.y-1];
+// 	}
+
+// }
+
+// var Cell = function(x, y, isPlayerA) {
+// 	var self = this;
+// 	self.x = x;
+// 	self.y = y;
+// 	self.isPlayerA = isPlayerA || undefined;
+// }
+
+// var board = new Board();
+// board.reset();
+// board.print();
+
+// setInterval(function(){
+// 	// Check for gravity
+
+// }, 1000/60)
+
+// nopixel.on('clicked', function (eventDetail) {
+// 	board.setPoint(eventDetail.x, eventDetail.y);
+// 	board.nextTurn();
+// 	board.print();
+// });
