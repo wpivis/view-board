@@ -5,15 +5,50 @@ const Canvas = require('canvas');
 const canvas = new Canvas(7, 7);
 const ctx = canvas.getContext('2d');
 
-function component(width, height, color, x, y) {
-    this.width = width;
-    this.height = height;
+var Board = function() {
+    var self = this;
+    self.length = 7;
+    self.height = 6;
+    self.isTurnA = true;
+
+    self.pieces = [];
+
+    
+
+    self.setPoint = function(x, y) {
+        // Check for collision
+
+        self.isTurnA ? 
+            self.pieces[a][b].isPlayerA = true : 
+            self.pieces[a][b].isPlayerA = false;
+    }
+
+    self.nextTurn = function() {
+        self.isTurnA = !self.isTurnA;
+        // Calculate logic
+    }
+
+    self.print = function() {
+        console.log(self.pieces);
+    }
+
+    self.getCellUnder = function(Cell) {
+        return (Cell.y == 0) ? undefined : self.pieces[Piece.x][Piece.y-1];
+    }
+
+}
+
+function Piece(x, y, color, isPlayerA) {
+    this.width = 1;
+    this.height = 1;
     this.x = x;
     this.y = y; 
     this.speedX = 0;
     this.speedY = 0; 
     this.gravity = 0.1;
     this.gravitySpeed = 0;
+    this.isPlayerA = isPlayerA || undefined;
+
     this.update = function() {
     	ctx.fillStyle = color;
     	ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -33,21 +68,15 @@ function component(width, height, color, x, y) {
     }
 }
 
-setTimeout(function(){nopixel.update()}, 500);
-
-var objects = [new component(1,1,'red', 1,1)];
+var objects = [];
 var colors = ["red", "green", "blue", "cyan", "purple"];
 
 nopixel.on('clicked', function(eventDetail) {
-	objects.push(new component(1,1, colors[Math.floor(Math.random() * colors.length)], eventDetail.x, eventDetail.y));
-    console.log(objects);
+	objects.push(new Piece(eventDetail.x, eventDetail.y, colors[Math.floor(Math.random() * colors.length)]));
 })
 
-var el = new component(1,1,"red", 3,3);
-
 setInterval(function(){
-	ctx.clearRect(0,0,7,7);
-
+    ctx.clearRect(0,0,7,7);
 	if (objects.length > 0) {
 		objects.forEach(function(el) {
 			el.newPos();
@@ -57,74 +86,6 @@ setInterval(function(){
     nopixel.fromCanvas(ctx.getImageData(0,0,7,7).data);
 	nopixel.update();
 }, 1000/60);
-
-var fs = require('fs')
-, out = fs.createWriteStream(__dirname + '/test.png')
-, stream = canvas.pngStream();
-
-stream.on('data', function(chunk){
-	out.write(chunk);
-});
-
-stream.on('end', function(){
-	console.log('saved png');
-});
-
-
-//======================================
-// const velocity = 
-
-// var Board = function() {
-// 	var self = this;
-// 	self.length = 7;
-// 	self.height = 6;
-// 	self.isTurnA = true;
-
-// 	self.cells = [];
-
-// 	self.reset = function() {
-// 			for (var i=0;i<self.length;i++) {
-// 				var cols = [];
-// 				for (var j=0;j<self.height;j++) {
-// 					cols.push(new Cell(i,j));
-// 				}
-// 			self.cells.push(cols);
-// 		}
-// 	}
-
-// 	self.checkGravity = function() {
-
-// 	}
-
-// 	self.setPoint = function(x, y) {
-// 		// Check for collision
-
-// 		self.isTurnA ? 
-// 			self.cells[a][b].isPlayerA = true : 
-// 			self.cells[a][b].isPlayerA = false;
-// 	}
-
-// 	self.nextTurn = function() {
-// 		self.isTurnA = !self.isTurnA;
-// 		// Calculate logic
-// 	}
-
-// 	self.print = function() {
-// 		console.log(self.cells);
-// 	}
-
-// 	self.getCellUnder = function(Cell) {
-// 		return (Cell.y == 0) ? undefined : self.cells[Cell.x][Cell.y-1];
-// 	}
-
-// }
-
-// var Cell = function(x, y, isPlayerA) {
-// 	var self = this;
-// 	self.x = x;
-// 	self.y = y;
-// 	self.isPlayerA = isPlayerA || undefined;
-// }
 
 // var board = new Board();
 // board.reset();
