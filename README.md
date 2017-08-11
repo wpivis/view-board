@@ -22,7 +22,7 @@ This module supports `node-canvas`. Simply create a 7x7 canvas, then export it t
 ```
 	var data = ctx.getImageData(0,0,7,7);
 	nopixel.fromCanvas(data);
-	nopixel.update
+	nopixel.update();
 ```
 For a working example, look into examples/ConnectFour
 
