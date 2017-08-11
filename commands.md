@@ -1,4 +1,5 @@
-# Serial Command manual
+# Serial Command Manual
+=========
 
 ## To Teensy
 
