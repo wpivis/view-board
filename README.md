@@ -1,15 +1,41 @@
 # view-board
 For our very own [AnyPixel.js](http://googlecreativelab.github.io/anypixel/) board
+=========
 
 ## Architecture
 
-Project use Arduino to control WS2812 LED strip(s) and buttons, using Firmata firmware, and [Johnny Five framework](http://johnny-five.io/). 
+Project uses a Teensy 2.0 board to control the WS2812 LED strip and buttons, using serial data to communicate.
 
-Currently the Johnny Five Framework is running on a Node server that continuously sends button data (currently to stdout), and enable setting LED status with a POST request.
+## Usage
 
-## Roadmap
+- Flash the firmware found in `firmware/arduino_firmware` to the Teensy
+- Create a `config.json` following this template
+	[{
+		"comPort": "/name/of/comPort",
+		"baudRate": BAUD_RATE
+	}]
+- Run `node app.js` for the example app
 
-- Add configurations
-- Fix the hacky part
-- Test/Modify the code to work with 2x2 and 4x4 before moving on to 7x7
-- Use Socket.IO
+### Canvas support
+
+This module supports `node-canvas`. Simply create a 7x7 canvas, then export it to the board using 
+```
+	var data = ctx.getImageData(0,0,7,7);
+	nopixel.fromCanvas(data);
+	nopixel.update();
+```
+For a working example, look into examples/ConnectFour
+
+### Commands Manual
+
+See `commands.md`
+
+## Future work
+
+- Emulator
+- Make an even bigger one!
+- Use pre-wired WS2812 instead of manually soldering wires
+- Utility buttons?
+- Flushed USB port
+- getPixelData() function
+- Hardware problem with Pixel #8

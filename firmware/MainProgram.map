@@ -1,6 +1,0 @@
-Archive member included to satisfy reference by file (symbol)
-
-/usr/lib/gcc/avr/6.3.0/avr5/libgcc.a(_exit.o)
-                              /usr/lib/gcc/avr/6.3.0/../../../../avr/lib/avr5/crtatmega32u4.o (exit)
-/usr/lib/gcc/avr/6.3.0/avr5/libgcc.a(_clear_bss.o)
-                              ./rainbow.o (__do_clear_bss)
