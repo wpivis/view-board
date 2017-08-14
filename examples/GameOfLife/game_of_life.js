@@ -201,7 +201,7 @@ var redraw = setInterval(function() {
 		world1.export();
 	} else {
 		console.log("tick");
-		timer1 = idleTimeout(world1);
+		//timer1 = idleTimeout(world1);
 		world1.tick();
 		world1.export();
 	}
@@ -216,10 +216,10 @@ nopixel.on("pressed", function(eventDetail) {
 	isPaused = !isPaused;
 })
 
-nopixel.on("idle", function(eventDetail) {
-	clearTimeout(timer1);
+//nopixel.on("idle", function(eventDetail) {
+//	clearTimeout(timer1);
 	// timer1 = idleTimeout(world1);
-})
+//})
 
 function colorFromAge(cell) {
 	return {h: cell.age%MAX_AGE, s:1, l: 0.5-(0.1*cell.generation)}
