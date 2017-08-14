@@ -1,0 +1,15 @@
+{
+  "name": "room-light",
+  "version": "1.0.0",
+  "description": "Controlling room-light with view-board",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nam Tran",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^2.11.0",
+    "tinycolor2": "^1.4.1"
+  }
+}
