@@ -16,17 +16,17 @@ nopixel.on('clicked', function (eventDetail) {
 	console.log("Received button press: " + eventDetail.index);
 	console.log("x: " + eventDetail.x + ", y: " + eventDetail.y);
 
-	counter[eventDetail.index]++;
-	if (counter[eventDetail.index] > 16) {
-		counter[eventDetail.index]=0;
-	}
-
 	var count = counter[eventDetail.index];
 	var color = colors[count];
 	console.log("Counter: " + count + ", Color: " + color);
 
 	nopixel.setPixel(eventDetail.x, eventDetail.y, color);
 	nopixel.update();
+
+	counter[eventDetail.index]++;
+	if (counter[eventDetail.index] > 15) {
+		counter[eventDetail.index] = 0;
+	}
 })
 
 nopixel.on('pressed', function (eventDetail) {

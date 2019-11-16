@@ -2,7 +2,7 @@
 #include <Keypad.h>
 
 #define NUM_LEDS 49
-#define DATA_PIN PIN_F1
+#define DATA_PIN 15
 #define BAUD_RATE 115200
 
 CRGB leds[NUM_LEDS];
@@ -19,8 +19,8 @@ char keys[ROWS][COLS] = {
   {6, 13, 20, 27, 34, 41, 48}
 };
 
-byte colPins[COLS] = {PIN_D0, PIN_D1, PIN_D2, PIN_D3, PIN_D4, PIN_D5, PIN_D6}; //connect to the row pinouts of the keypad
-byte rowPins[ROWS] = {PIN_B0, PIN_B1, PIN_B2, PIN_B3, PIN_B4, PIN_B5, PIN_B6}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = {17,2 ,3 ,4 ,5 ,6 ,7 }; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {8 ,9 ,10,11,12,16,14}; //connect to the column pinouts of the keypad
 
 Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
@@ -34,6 +34,8 @@ void setup() {
   Serial.setTimeout(50);
   kpd.setDebounceTime(1);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  FastLED.setMaxPowerInVoltsAndMilliamps(5,500); 
+
 }
 
 unsigned long loopCount = 0;
@@ -152,5 +154,3 @@ void parseCommand() {
         newData = false;
     }
 }
-
-
