@@ -4,7 +4,15 @@ For our very own [AnyPixel.js](http://googlecreativelab.github.io/anypixel/) boa
 
 ## Architecture
 
-Project uses a Teensy 2.0 board to control the WS2812 LED strip and buttons, using serial data to communicate.
+Project uses a Teensy 3.2 board to control the WS2812 LED strip and buttons, using serial data to communicate.
+
+## Install
+
+To install the library, simply type this into your nearest console: `npm install nopixel`.
+
+At this point you may note that your computer is slightly unhappy. This is due to the fact that `nopixel` relies on `serialport` to get access to, well, the serial port. `serialport` however, relies on `node-gyp` which is notoriously hard to build. Therefore I recommend you go to https://github.com/nodejs/node-gyp#installation for your troubleshooting needs.
+
+If installation of `nopixel` still fails, please run `npm install serialport` first.
 
 ## Usage
 
