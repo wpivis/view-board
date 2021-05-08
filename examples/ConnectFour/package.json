@@ -9,6 +9,6 @@
   "author": "Nam Tran",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^1.6.10"
+    "canvas": "^1.6.11"
   }
 }
